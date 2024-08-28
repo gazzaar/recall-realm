@@ -15,11 +15,12 @@ const Cards = () => {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [selectedPokemons, setSelectedPokemons] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   const pokemons = async () => {
     const pokemonArray = [];
     for (let name of names) {
       const result = await fetchData(name);
+      setLoading(false);
       pokemonArray.push({
         id: uuidv4(),
         name: result.name,
@@ -85,6 +86,7 @@ const Cards = () => {
     pokemons();
   }, []);
 
+  if (loading) return <p> Loading...</p>;
   return (
     <>
       <Header score={score} bestScore={bestScore} />
